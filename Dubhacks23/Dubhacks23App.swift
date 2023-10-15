@@ -6,12 +6,25 @@
 //
 
 import SwiftUI
-
 @main
 struct Dubhacks23App: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    var flowController = FlowController()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          NavigationStack {
+            FlowView()
+            .environmentObject(flowController)
+            .onAppear {
+              ShieldController.removeShield()
+            }
+          }
         }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func applicationWillTerminate(_ application: UIApplication) {
+      ShieldController.removeShield()
     }
 }
